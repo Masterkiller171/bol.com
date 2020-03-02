@@ -2,9 +2,10 @@ package com.example.bol.domain;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.net.URL;
 
-public class Product {
+public class Product implements Serializable {
     private long id;
     private long EAN;
     private String gpc;
@@ -15,7 +16,11 @@ public class Product {
     private int rating;
     private String shortDescription;
     private String longDescrition;
-    private URL imageUrl;
+    private URL imageUrlSmall;
+    private URL imageUrlBig;
+
+    private double currentPrice;
+    private double normalPrice;
 
 
     public Product() {
@@ -61,8 +66,20 @@ public class Product {
         this.longDescrition = longDescrition;
     }
 
-    public void setImageUrl(URL imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUrlSmall(URL imageUrl) {
+        this.imageUrlSmall = imageUrl;
+    }
+
+    public void setImageUrlBig(URL imageUrlBig) {
+        this.imageUrlBig = imageUrlBig;
+    }
+
+    public void setCurrentPrice(double currentPrice) {
+        this.currentPrice = currentPrice;
+    }
+
+    public void setNormalPrice(double normalPrice) {
+        this.normalPrice = normalPrice;
     }
 
     public long getId() {
@@ -105,7 +122,19 @@ public class Product {
         return longDescrition;
     }
 
-    public URL getImageUrl() {
-        return imageUrl;
+    public URL getImageUrlSmall() {
+        return imageUrlSmall;
+    }
+
+    public URL getImageUrlBig() {
+        return imageUrlBig;
+    }
+
+    public double getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public double getNormalPrice() {
+        return normalPrice;
     }
 }

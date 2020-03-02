@@ -1,8 +1,7 @@
-package com.example.bol.logic;
+package com.example.bol.dal;
 
 import android.app.Activity;
 import android.net.Uri;
-import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bol.R;
 import com.example.bol.domain.Product;
 import com.example.bol.logic.JSONTask;
+import com.example.bol.logic.bolAdapter;
 
 import java.net.MalformedURLException;
 import java.net.URL;

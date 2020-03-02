@@ -5,27 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".gui.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <EditText
+        <SearchView
             android:id="@+id/main_txt_in"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@string/potter" />
+            android:layout_width="363dp"
+            android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/main_but_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/searchBut" />
+        <ImageView
+            android:id="@+id/main_img_filter"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/setting" />
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/main_but_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/searchBut" />
 
     <ScrollView
         android:layout_width="match_parent"

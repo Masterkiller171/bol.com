@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".gui.ProductActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/product_img_background"
+            android:layout_width="match_parent"
+            android:layout_height="416dp"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/product_txt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:text="Product Name"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/product_txt_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="20dp"
+            android:text="Product Price"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/product_txt_shortdesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:text='"Short Description Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sit amet lacus tempus, efficitur urna non, ultricies libero. Curabitur quis gravida lorem, at porttitor odio. Duis et orci fringilla, gravida massa at, vehicula nisl. Proin sapien enim, dignissim vel iaculis vel, aliquam quis velit. Proin blandit efficitur aliquet. Vestibulum velit ex, condimentum ut tempor sit amet, pulvinar sit amet risus. Phasellus pharetra non magna sit amet sodales. Aenean est lorem, accumsan bibendum dapibus vel, pellentesque non ex. Sed fringilla non justo id aliquam. Donec gravida felis lectus, in fringilla ipsum lacinia tincidunt."'
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/product_txt_rating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="20dp"
+            android:text="@string/rating"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+</ScrollView>

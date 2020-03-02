@@ -11,8 +11,6 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class JSONReader {
-    public JSONReader(String JSONString) {
-    }
 
     public static ArrayList<Product> procesJSON(String JSONString){
         Product product = new Product();
@@ -32,6 +30,7 @@ public class JSONReader {
                 product.setSubTitle(object.getString("subtitle"));
                 product.setSummary(object.getString("summary"));
                 product.setRating(Integer.parseInt(object.getString("rating")));
+                product.setShortDescription(object.getString("shortDescription"));
                 product.setLongDescrition(object.getString("longDescription"));
 
                 JSONArray imgArr = object.getJSONArray("images");
@@ -39,8 +38,20 @@ public class JSONReader {
                     String size = imgArr.getJSONObject(i1).getString("key");
 
                     if (size.equals("M")) {
-                        product.setImageUrl(new URL(imgArr.getJSONObject(i1).getString("url")));
+                        product.setImageUrlSmall(new URL(imgArr.getJSONObject(i1).getString("url")));
                     }
+
+                    if (size.equals("XL")){
+                        product.setImageUrlBig(new URL(imgArr.getJSONObject(i1).getString("url")));
+                    }
+                }
+
+                JSONObject offerData = object.getJSONObject("offerData");
+                JSONArray  offers = offerData.getJSONArray("offers");
+
+                for (int i1 = 0; i1 < offers.length(); i1++) {
+                   product.setCurrentPrice(offers.getJSONObject(i1).getDouble("price"));
+                   product.setNormalPrice(offers.getJSONObject(i1).getDouble("listPrice"));
                 }
 
                 productArr.add(product);

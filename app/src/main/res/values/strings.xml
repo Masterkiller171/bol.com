@@ -2,4 +2,8 @@
     <string name="app_name">bol</string>
     <string name="searchBut">Search!</string>
     <string name="potter">Potter</string>
+    <string name="sort_alpa">Sort alphabetically</string>
+    <string name="sort_on_price">Sort on price</string>
+    <string name="refresh_results">Refresh results</string>
+    <string name="rating">Rating</string>
 </resources>
