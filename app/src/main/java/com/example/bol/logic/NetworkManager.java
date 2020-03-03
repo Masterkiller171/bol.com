@@ -1,42 +1,40 @@
 package com.example.bol.logic;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bol.R;
-import com.example.bol.dal.NetworkUtils;
+import com.example.bol.data.NetworkUtils;
+import com.example.bol.data.Preferences;
 import com.example.bol.domain.Product;
 import com.example.bol.logic.sorting.HighToLowSort;
 import com.example.bol.logic.sorting.LowToHighSort;
 import com.example.bol.logic.sorting.ProductSort;
 
+import java.util.Locale;
+
 public class NetworkManager {
-    private String mProductName;
     private Activity mActivity;
     private NetworkUtils networkUtils;
-    private int sortingButtonId;
     private Product[] products;
 
-    public NetworkManager(String mProductName, Activity mActivity, int sortingButtonId) {
-        this.mProductName = mProductName;
-        this.mActivity = mActivity;
-        this.sortingButtonId = sortingButtonId;
-    }
+    private final static String LANGUAGE_CODE = "lang";
 
     public NetworkManager(Activity mActivity) {
         this.mActivity = mActivity;
     }
 
-    public void showProducts(){
-        if (isInputEmpty()){
+    public void showProducts(int sortingButtonId, String mProductName){
+        if (isInputEmpty(mProductName)){
             Toast.makeText(mActivity, "No inuput!", Toast.LENGTH_SHORT).show();
         }else{
-            this.networkUtils = new NetworkUtils(this.mProductName, this.mActivity);
+            this.networkUtils = new NetworkUtils(mProductName, this.mActivity);
             this.products = this.networkUtils.getProducts();
-            insertAdapterData(processSortingProducts());
+            insertAdapterData(processSortingProducts(sortingButtonId));
         }
     }
 
@@ -44,9 +42,9 @@ public class NetworkManager {
         return products;
     }
 
-    private Product[] processSortingProducts(){
+    private Product[] processSortingProducts(int sortingButtonId){
         ProductSort sorter;
-        switch (this.sortingButtonId){
+        switch (sortingButtonId){
             case R.id.filter_but_hightolow:{
                 sorter = new HighToLowSort();
                 sorter.setProducts(this.products);
@@ -72,7 +70,38 @@ public class NetworkManager {
         recyclerView.setAdapter(mAdapter);
     }
 
-    private boolean isInputEmpty(){
+    public void checkLanguage(){
+        String langCode = getPreferences(LANGUAGE_CODE);
+
+        if (langCode != null){
+            applyLanguage(langCode);
+        }else{
+            applyLanguage("English");
+        }
+    }
+
+    private void applyLanguage(String language){
+        String langCode = "en";
+        switch (language){
+            case "Nederlands": langCode = "nl"; break;
+            case "English": langCode = "en";break;
+        }
+
+        Locale locale = new Locale(langCode);
+        Locale.setDefault(locale);
+        Configuration configuration = mActivity.getResources().getConfiguration();
+        configuration.setLocale(locale);
+        mActivity.getResources().updateConfiguration(configuration, mActivity.getResources().getDisplayMetrics());
+    }
+
+    public void setPreferences(String key, String value){
+        Preferences.storeString(key, value, this.mActivity);
+    }
+
+    public String getPreferences(String key){
+        return Preferences.retrieveString(key, this.mActivity);
+    }
+    private boolean isInputEmpty(String mProductName){
         return mProductName.equals("") || mProductName.isEmpty();
     }
 }

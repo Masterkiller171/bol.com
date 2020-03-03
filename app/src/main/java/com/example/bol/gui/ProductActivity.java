@@ -12,14 +12,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bol.R;
 import com.example.bol.domain.Product;
+import com.example.bol.logic.NetworkManager;
 import com.squareup.picasso.Picasso;
 
 public class ProductActivity extends AppCompatActivity {
+    private NetworkManager networkManager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.networkManager = new NetworkManager(this);
+        this.networkManager.checkLanguage();
         setContentView(R.layout.activity_product);
-
         setupData();
     }
 

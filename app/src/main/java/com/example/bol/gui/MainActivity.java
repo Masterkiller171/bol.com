@@ -4,11 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.os.Parcel;
 import android.os.Parcelable;
-import android.os.PersistableBundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,16 +13,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListPopupWindow;
 import android.widget.SearchView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bol.R;
-import com.example.bol.dal.NetworkUtils;
 import com.example.bol.domain.Product;
 import com.example.bol.logic.IntentSwitch;
 import com.example.bol.logic.NetworkManager;
-import com.example.bol.logic.sorting.HighToLowSort;
-import com.example.bol.logic.sorting.ProductSort;
 
 import java.util.Arrays;
 
@@ -38,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.manager = new NetworkManager(this);
+        this.manager.checkLanguage();
+
         setupMainActivity();
     }
 
@@ -58,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        this.manager.checkLanguage();
         super.onRestoreInstanceState(savedInstanceState);
 
         if (savedInstanceState.getString("searchInput") != null){
@@ -69,10 +66,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (savedInstanceState.getParcelableArray("searchOutput") != null){
             Product[] products = toProducts(savedInstanceState.getParcelableArray("searchOutput"));
 
-            if (products != null) {
-                manager = new NetworkManager(this);
-                manager.insertAdapterData(products);
-            }
+            manager = new NetworkManager(this);
+            manager.insertAdapterData(products);
         }
 
     }
@@ -91,8 +86,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public static Product[] toProducts(Parcelable[] parcelables) {
-        if (parcelables == null)
-            return null;
         return Arrays.copyOf(parcelables, parcelables.length, Product[].class);
     }
 
@@ -135,8 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void onSearch(){
         SearchView input = findViewById(R.id.main_txt_in);
-        this.manager = new NetworkManager(input.getQuery().toString(), this, this.mSortingButtonId);
-        this.manager.showProducts();
+        this.manager.showProducts(mSortingButtonId, input.getQuery().toString());
     }
 
     private void onFilter(){

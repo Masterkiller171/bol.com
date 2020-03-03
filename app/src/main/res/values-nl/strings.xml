@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">bol</string>
+    <string name="language">Kies Taal</string>
+    <string name="potter">Potter</string>
+    <string name="rating">Beoordeling</string>
+    <string name="searchBut">Zoek op!</string>
+    <string name="settings">Instellingen</string>
+    <string name="sort_high_to_low">Sorteer van hoog naar laag</string>
+    <string name="sort_low_to_high">Sorteer van laag naar hoog</string>
+    <string name="sort_on_price">Sorteer op prijs</string>
+</resources>
