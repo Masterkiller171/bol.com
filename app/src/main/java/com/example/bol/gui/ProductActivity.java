@@ -25,7 +25,7 @@ public class ProductActivity extends AppCompatActivity {
 
     private void setupData(){
         Intent intent = getIntent();
-        Product product = (Product)intent.getSerializableExtra("product");
+        Product product = intent.getParcelableExtra("product");
 
         TextView productName = findViewById(R.id.product_txt_name);
         productName.setText(product.getTitle());
@@ -37,7 +37,7 @@ public class ProductActivity extends AppCompatActivity {
         productShortDescription.setText(product.getShortDescription());
 
         ImageView img = findViewById(R.id.product_img_background);
-        Picasso.get().load(product.getImageUrlBig().toString()).into(img);
+        Picasso.get().load(product.getImageUrlBig()).into(img);
 
         TextView rating  = findViewById(R.id.product_txt_rating);
         StringBuilder sb = new StringBuilder();
@@ -45,7 +45,7 @@ public class ProductActivity extends AppCompatActivity {
         sb.append(((double)product.getRating() / 10));
         sb.append("/");
         sb.append(10);
-        
+
         rating.setText(sb.toString());
     }
 }

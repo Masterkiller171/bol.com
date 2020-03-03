@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bol.R;
 import com.example.bol.domain.Product;
-import com.example.bol.logic.JSONTask;
-import com.example.bol.logic.bolAdapter;
+import com.example.bol.logic.json.JSONTask;
+import com.example.bol.logic.BolAdapter;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -27,10 +27,6 @@ public class NetworkUtils {
     public NetworkUtils(String productName, Activity mActivity) {
         this.productName = productName;
         this.mActivity = mActivity;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
     }
 
     public ArrayList<Product> getUrlContent() throws ExecutionException, InterruptedException {
@@ -57,30 +53,21 @@ public class NetworkUtils {
         return url;
     }
 
-    public void showBaseUrlJSON(){
+    public Product[] getProducts(){
+        Product[] data = null;
         try {
             ArrayList<Product> products = getUrlContent();
 
-            Product[] data = new Product[products.size()];
+            data = new Product[products.size()];
             for (int i = 0; i < products.size(); i++) {
                 data[i] = products.get(i);
             }
 
-            setupAdapter(data);
+            return data;
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
 
+        return data;
     }
-
-    private void setupAdapter(Product[] data){
-        RecyclerView recyclerView = mActivity.findViewById(R.id.main_rec_results);
-        recyclerView.setHasFixedSize(true);
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(mActivity);
-        recyclerView.setLayoutManager(layoutManager);
-        RecyclerView.Adapter mAdapter = new bolAdapter(data, mActivity);
-        recyclerView.setAdapter(mAdapter);
-    }
-
 }

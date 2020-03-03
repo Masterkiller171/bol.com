@@ -1,57 +1,76 @@
 package com.example.bol.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.io.Serializable;
 import java.net.URL;
 
-public class Product implements Serializable {
+public class Product implements Parcelable {
     private long id;
-    private long EAN;
-    private String gpc;
     private String title;
-    private String subTitle;
-    private String specsTag;
-    private String summary;
     private int rating;
     private String shortDescription;
-    private String longDescrition;
-    private URL imageUrlSmall;
-    private URL imageUrlBig;
+    private String summary;
+    private String imageUrlSmall;
+    private String imageUrlBig;
 
-    private double currentPrice;
     private double normalPrice;
 
 
     public Product() {
     }
 
+    protected Product(Parcel in) {
+        id = in.readLong();
+        title = in.readString();
+        rating = in.readInt();
+        shortDescription = in.readString();
+        summary = in.readString();
+        imageUrlSmall = in.readString();
+        imageUrlBig = in.readString();
+        normalPrice = in.readDouble();
+    }
+
+    //-------------------CREATOR--------------------
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
+
+    //-------------------PARCELABLE--------------------
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(title);
+        parcel.writeInt(rating);
+        parcel.writeString(shortDescription);
+        parcel.writeString(summary);
+        parcel.writeString(imageUrlSmall);
+        parcel.writeString(imageUrlBig);
+        parcel.writeDouble(normalPrice);
+    }
+
+    //-------------------SETTERS--------------------
     public void setId(long id) {
         this.id = id;
     }
 
-    public void setEAN(long EAN) {
-        this.EAN = EAN;
-    }
-
-    public void setGpc(String gpc) {
-        this.gpc = gpc;
-    }
-
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setSubTitle(String subTitle) {
-        this.subTitle = subTitle;
-    }
-
-    public void setSpecsTag(String specsTag) {
-        this.specsTag = specsTag;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
     }
 
     public void setRating(int rating) {
@@ -62,52 +81,29 @@ public class Product implements Serializable {
         this.shortDescription = shortDescription;
     }
 
-    public void setLongDescrition(String longDescrition) {
-        this.longDescrition = longDescrition;
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
-    public void setImageUrlSmall(URL imageUrl) {
+    public void setImageUrlSmall(String imageUrl) {
         this.imageUrlSmall = imageUrl;
     }
 
-    public void setImageUrlBig(URL imageUrlBig) {
+    public void setImageUrlBig(String imageUrlBig) {
         this.imageUrlBig = imageUrlBig;
-    }
-
-    public void setCurrentPrice(double currentPrice) {
-        this.currentPrice = currentPrice;
     }
 
     public void setNormalPrice(double normalPrice) {
         this.normalPrice = normalPrice;
     }
 
+    //-------------------GETTERS--------------------
     public long getId() {
         return id;
     }
 
-    public long getEAN() {
-        return EAN;
-    }
-
-    public String getGpc() {
-        return gpc;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public String getSubTitle() {
-        return subTitle;
-    }
-
-    public String getSpecsTag() {
-        return specsTag;
-    }
-
-    public String getSummary() {
-        return summary;
     }
 
     public int getRating() {
@@ -118,23 +114,19 @@ public class Product implements Serializable {
         return shortDescription;
     }
 
-    public String getLongDescrition() {
-        return longDescrition;
-    }
-
-    public URL getImageUrlSmall() {
+    public String getImageUrlSmall() {
         return imageUrlSmall;
     }
 
-    public URL getImageUrlBig() {
+    public String getImageUrlBig() {
         return imageUrlBig;
     }
 
-    public double getCurrentPrice() {
-        return currentPrice;
+    public String getSummary() {
+        return summary;
     }
 
-    public double getNormalPrice() {
+    public double getCurrentPrice() {
         return normalPrice;
     }
 }

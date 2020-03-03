@@ -4,20 +4,15 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/filter_but_hightolow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sort_alpa" />
+        android:text="@string/sort_high_to_low" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/filter_but_lowtohigh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sort_on_price" />
+        android:text="@string/sort_low_to_high" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/refresh_results" />
 </LinearLayout>

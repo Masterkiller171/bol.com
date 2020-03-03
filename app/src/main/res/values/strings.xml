@@ -6,4 +6,7 @@
     <string name="sort_on_price">Sort on price</string>
     <string name="refresh_results">Refresh results</string>
     <string name="rating">Rating</string>
+    <string name="sort_high_to_low">Sort High To Low</string>
+    <string name="sort_low_to_high">Sort Low to High</string>
+    <string name="settings">settings</string>
 </resources>

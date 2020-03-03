@@ -1,6 +1,5 @@
-package com.example.bol.logic;
+package com.example.bol.logic.json;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
 

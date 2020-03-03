@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".gui.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <SearchView
+            android:id="@+id/main_txt_in"
+            android:layout_width="668dp"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/main_img_filter"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/setting" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/main_but_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/searchBut" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_rec_results"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+</LinearLayout>

@@ -4,12 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bol.gui.ProductActivity;
@@ -17,17 +16,17 @@ import com.example.bol.R;
 import com.example.bol.domain.Product;
 import com.squareup.picasso.Picasso;
 
-public class bolAdapter extends RecyclerView.Adapter<bolAdapter.bolViewHolder> {
+public class BolAdapter extends RecyclerView.Adapter<BolAdapter.bolViewHolder> {
     private Product[] mDataset;
     private Context context;
 
-    public bolAdapter(Product[] mDataset, Context context) {
+    public BolAdapter(Product[] mDataset, Context context) {
         this.mDataset = mDataset;
         this.context = context;
     }
 
     public static class bolViewHolder extends RecyclerView.ViewHolder{
-        private ConstraintLayout textView;
+        private FrameLayout textView;
 
         public bolViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,9 +55,18 @@ public class bolAdapter extends RecyclerView.Adapter<bolAdapter.bolViewHolder> {
             }
         });
 
-        TextView view = holder.textView.findViewById(R.id.rec_txtv_id);
+        TextView view = holder.textView.findViewById(R.id.rec_txtv_title);
+        if (mDataset[position].getTitle().length() > 30) {
+            view.setText(mDataset[position].getTitle().substring(0, 30));
+        }else{
+            view.setText(mDataset[position].getTitle());
+        }
 
-        view.setText(String.valueOf(mDataset[position].getId()));
+        view = holder.textView.findViewById(R.id.rec_txtv_price);
+        view.setText(String.valueOf(mDataset[position].getCurrentPrice()));
+
+        view = holder.textView.findViewById(R.id.rec_txtv_summary);
+        view.setText(mDataset[position].getSummary());
 
         ImageView img = holder.textView.findViewById(R.id.rec_img_product);
 
@@ -71,7 +79,7 @@ public class bolAdapter extends RecyclerView.Adapter<bolAdapter.bolViewHolder> {
 
     @Override
     public int getItemCount() {
-        Toast.makeText(context, mDataset.length + " results found!", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, mDataset.length + " results found!", Toast.LENGTH_SHORT).show();
         return mDataset.length;
     }
 }
