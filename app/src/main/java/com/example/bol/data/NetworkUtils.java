@@ -14,18 +14,17 @@ import java.util.concurrent.ExecutionException;
 public class NetworkUtils {
 
     private final static String BOL_BASE_URL = "https://api.bol.com";
-    private String productName;
-    private String urlContent;
+    private String mProductName;
     private Activity mActivity;
     private final static String API_KEY = "25C4742A92BF468EB2BD888FC8FBFF40";
 
     public NetworkUtils(String productName, Activity mActivity) {
-        this.productName = productName;
+        this.mProductName = productName;
         this.mActivity = mActivity;
     }
 
     public ArrayList<Product> getUrlContent() throws ExecutionException, InterruptedException {
-        JSONTask task = new JSONTask();
+        JSONTask task = new JSONTask(mActivity);
         return task.execute(buildUrl()).get();
     }
 
@@ -36,7 +35,7 @@ public class NetworkUtils {
                 .appendPath("search")
                 .appendQueryParameter("apikey", API_KEY)
                 .appendQueryParameter("format", "json")
-                .appendQueryParameter("q", productName)
+                .appendQueryParameter("q", mProductName)
                 .build();
 
         URL url = null;

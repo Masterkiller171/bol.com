@@ -2,27 +2,28 @@ package com.example.bol.gui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.bol.R;
 import com.example.bol.domain.Product;
+import com.example.bol.logic.IntentSwitch;
 import com.example.bol.logic.NetworkManager;
 import com.squareup.picasso.Picasso;
 
-public class ProductActivity extends AppCompatActivity {
-    private NetworkManager networkManager;
+public class ProductActivity extends AppCompatActivity implements View.OnClickListener {
+    private NetworkManager mNetworkManager;
+    private TextView mProductName;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.networkManager = new NetworkManager(this);
-        this.networkManager.checkLanguage();
+        this.mNetworkManager = new NetworkManager(this);
+        this.mNetworkManager.checkLanguage();
         setContentView(R.layout.activity_product);
         setupData();
     }
@@ -31,8 +32,8 @@ public class ProductActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Product product = intent.getParcelableExtra("product");
 
-        TextView productName = findViewById(R.id.product_txt_name);
-        productName.setText(product.getTitle());
+        mProductName = findViewById(R.id.product_txt_name);
+        mProductName.setText(product.getTitle());
 
         TextView productPrice = findViewById(R.id.product_txt_price);
         productPrice.setText(String.valueOf(product.getCurrentPrice()));
@@ -51,5 +52,27 @@ public class ProductActivity extends AppCompatActivity {
         sb.append(10);
 
         rating.setText(sb.toString());
+
+        findViewById(R.id.product_but_sharewa).setOnClickListener(this);
+        findViewById(R.id.product_but_shared).setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.product_but_sharewa:{
+                shareProductOnWhatsapp();
+            }break;
+            case R.id.product_but_shared:{
+                shareProductOnDiscord();
+            }break;
+        }
+    }
+
+    private void shareProductOnWhatsapp(){
+        IntentSwitch.switchIntentShare(this, "com.whatsapp", this.mProductName.getText().toString());
+    }
+    private void shareProductOnDiscord(){
+        IntentSwitch.switchIntentShare(this, "com.discord", this.mProductName.getText().toString());
     }
 }

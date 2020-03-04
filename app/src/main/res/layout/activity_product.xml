@@ -52,5 +52,17 @@
             android:text="@string/rating"
             android:textSize="18sp" />
 
+        <Button
+            android:id="@+id/product_but_sharewa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/share_product_on_whatsapp" />
+
+        <Button
+            android:id="@+id/product_but_shared"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/share_on_discord" />
+
     </LinearLayout>
 </ScrollView>

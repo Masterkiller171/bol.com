@@ -1,9 +1,12 @@
 package com.example.bol.logic.json;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.bol.domain.Product;
+import com.example.bol.gui.MainActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,12 +18,18 @@ import java.util.ArrayList;
 import javax.net.ssl.HttpsURLConnection;
 
 public class JSONTask extends AsyncTask<URL, String, ArrayList<Product>> {
-    public JSONTask() {
+    private ProgressDialog mDialog;
+    private Activity mActivity;
+
+    public JSONTask(Activity activity) {
+        this.mActivity = activity;
+        mDialog = new ProgressDialog(this.mActivity);
     }
 
     @Override
     protected void onPreExecute() {
-
+        mDialog.setMessage("Please load while we load the json data");
+        mDialog.show();
     }
 
     @Override
@@ -45,6 +54,7 @@ public class JSONTask extends AsyncTask<URL, String, ArrayList<Product>> {
                 sb.append(line);
             }
 
+
             json = JSONReader.procesJSON(sb.toString());
 
 
@@ -61,5 +71,8 @@ public class JSONTask extends AsyncTask<URL, String, ArrayList<Product>> {
 
     @Override
     protected void onPostExecute(ArrayList<Product> products) {
+        if (mDialog.isShowing()){
+            mDialog.dismiss();
+        }
     }
 }

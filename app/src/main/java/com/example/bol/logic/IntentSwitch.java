@@ -3,6 +3,7 @@ package com.example.bol.logic;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.example.bol.domain.Product;
 
@@ -17,5 +18,18 @@ public class IntentSwitch {
         Intent i = new Intent(context, classObj);
         i.putExtra("product", product);
         context.startActivity(i);
+    }
+
+    public static void switchIntentShare(Context context,String appPackage, String input){
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("text/plain");
+        i.setPackage(appPackage);
+
+        i.putExtra(Intent.EXTRA_TEXT, input);
+        try {
+            context.startActivity(i);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(context, "App has not been installed on this device!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

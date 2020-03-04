@@ -9,4 +9,7 @@
     <string name="sort_high_to_low">Sorteer van hoog naar laag</string>
     <string name="sort_low_to_high">Sorteer van laag naar hoog</string>
     <string name="sort_on_price">Sorteer op prijs</string>
+    <string name="share_on_discord">Deel op Discord</string>
+    <string name="share_product">Deel product</string>
+    <string name="share_product_on_whatsapp">Deel op WhatsApp</string>
 </resources>

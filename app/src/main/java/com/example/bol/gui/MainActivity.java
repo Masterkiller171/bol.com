@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.DisplayMetrics;
+import android.view.DragEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,6 +14,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListPopupWindow;
 import android.widget.SearchView;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bol.R;
@@ -25,16 +28,17 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private ListPopupWindow mListPopupWindow;
     private int mSortingButtonId;
-    private NetworkManager manager;
+    private NetworkManager mManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.manager = new NetworkManager(this);
-        this.manager.checkLanguage();
+
 
         setupMainActivity();
+        this.mManager = new NetworkManager(this);
+        this.mManager.checkLanguage();
     }
 
     @Override
@@ -46,17 +50,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        if (!input.isEmpty() || !input.equals("")){
             outState.putString("searchInput", input);
 
-            if (manager != null){
-                outState.putParcelableArray("searchOutput", manager.getProducts());
+            if (mManager != null){
+                outState.putParcelableArray("searchOutput", mManager.getProducts());
             }
 //        }
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        
+    }
+
+    @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        this.manager.checkLanguage();
         super.onRestoreInstanceState(savedInstanceState);
 
+        Toast.makeText(this, savedInstanceState.getString("searchInput"), Toast.LENGTH_SHORT).show();
         if (savedInstanceState.getString("searchInput") != null){
             Toast.makeText(this, "Page reloaded!", Toast.LENGTH_SHORT).show();
             SearchView view = findViewById(R.id.main_txt_in);
@@ -66,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (savedInstanceState.getParcelableArray("searchOutput") != null){
             Product[] products = toProducts(savedInstanceState.getParcelableArray("searchOutput"));
 
-            manager = new NetworkManager(this);
-            manager.insertAdapterData(products);
+            mManager = new NetworkManager(this);
+            mManager.insertAdapterData(products);
         }
 
     }
@@ -76,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.settings, menu);
+        this.mManager.checkLanguage();
         return true;
     }
 
@@ -94,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setupListPopUpWindow();
     }
 
+    private int mMaxPrice = 999;
+
     private void setupListPopUpWindow(){
         ImageView imgV = findViewById(R.id.main_img_filter);
         imgV.setOnClickListener(this);
@@ -111,6 +124,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         filterLayout.findViewById(R.id.filter_but_hightolow).setOnClickListener(this);
         filterLayout.findViewById(R.id.filter_but_lowtohigh).setOnClickListener(this);
+
+        final TextView mSlider = findViewById(R.id.filter_txt_maxprice);
+        SeekBar bar = filterLayout.findViewById(R.id.filter_seek_pricefilter);
+        bar.setMax(999);
+        bar.setProgress(mMaxPrice);
+        bar.setMin(0);
+
+        bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mMaxPrice = progress;
+                Toast.makeText(MainActivity.this, progress + " euro", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mSortingButtonId = seekBar.getId();
+                mMaxPrice = seekBar.getProgress();
+                onSearch();
+            }
+        });
     }
 
     @Override
@@ -128,7 +168,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void onSearch(){
         SearchView input = findViewById(R.id.main_txt_in);
-        this.manager.showProducts(mSortingButtonId, input.getQuery().toString());
+        this.mManager.showProducts(mSortingButtonId, input.getQuery().toString());
+
+        if (this.mManager.getProducts() != null) {
+            Toast.makeText(this, this.mManager.getProducts().length + " results found", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void onFilter(){

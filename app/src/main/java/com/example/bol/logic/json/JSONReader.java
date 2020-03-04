@@ -1,5 +1,7 @@
 package com.example.bol.logic.json;
 
+import android.os.AsyncTask;
+
 import com.example.bol.domain.Product;
 
 import org.json.JSONArray;
@@ -10,9 +12,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class JSONReader {
+class JSONReader{
 
-    public static ArrayList<Product> procesJSON(String JSONString){
+    static ArrayList<Product> procesJSON(String JSONString){
         Product product = new Product();
         ArrayList<Product> productArr = new ArrayList<>();
 
@@ -29,14 +31,14 @@ public class JSONReader {
                 productArr.add(JSONReader.processOffer(offers, JSONReader.processData(object, product)));
                 product = new Product();
             }
-        } catch (JSONException | MalformedURLException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
         return productArr;
     }
 
-    private static Product processData(JSONObject object, Product product) throws JSONException, MalformedURLException {
+    private static Product processData(JSONObject object, Product product) throws JSONException{
         product.setId(Long.parseLong(object.getString("id")));
         product.setTitle(object.getString("title"));
         product.setSummary(object.getString("summary"));

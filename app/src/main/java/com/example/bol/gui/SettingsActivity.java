@@ -19,13 +19,13 @@ import com.example.bol.logic.NetworkManager;
 import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private NetworkManager networkManager;
+    private NetworkManager mNetworkManager;
     private final static String LANGUAGE_CODE = "lang";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        this.networkManager = new NetworkManager(this);
-        this.networkManager.checkLanguage();
+        this.mNetworkManager = new NetworkManager(this);
+        this.mNetworkManager.checkLanguage();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
@@ -38,7 +38,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         Log.i("LANGUAGE", Locale.getDefault().getDisplayLanguage());
-        int spinnerPos = adapter.getPosition(networkManager.getPreferences(LANGUAGE_CODE));
+        int spinnerPos = adapter.getPosition(mNetworkManager.getPreferences(LANGUAGE_CODE));
         sp.setAdapter(adapter);
         sp.setSelection(spinnerPos);
 
@@ -48,10 +48,10 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String selectedLang = adapterView.getItemAtPosition(i).toString();
-        String savedLang = networkManager.getPreferences(LANGUAGE_CODE);
+        String savedLang = mNetworkManager.getPreferences(LANGUAGE_CODE);
 
         if (!selectedLang.equals(savedLang)) {
-            this.networkManager.setPreferences(LANGUAGE_CODE, selectedLang);
+            this.mNetworkManager.setPreferences(LANGUAGE_CODE, selectedLang);
             IntentSwitch.switchIntent(this, SettingsActivity.class);
             Toast.makeText(this, selectedLang + " set as language!", Toast.LENGTH_SHORT).show();
         }

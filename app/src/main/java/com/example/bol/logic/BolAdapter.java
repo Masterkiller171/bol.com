@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,13 +17,13 @@ import com.example.bol.R;
 import com.example.bol.domain.Product;
 import com.squareup.picasso.Picasso;
 
-public class BolAdapter extends RecyclerView.Adapter<BolAdapter.bolViewHolder> {
+public class BolAdapter extends RecyclerView.Adapter<BolAdapter.bolViewHolder>{
     private Product[] mDataset;
-    private Context context;
+    private Context mContext;
 
     public BolAdapter(Product[] mDataset, Context context) {
         this.mDataset = mDataset;
-        this.context = context;
+        this.mContext = context;
     }
 
     public static class bolViewHolder extends RecyclerView.ViewHolder{
@@ -51,7 +52,7 @@ public class BolAdapter extends RecyclerView.Adapter<BolAdapter.bolViewHolder> {
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                IntentSwitch.switchIntentWithData(context, ProductActivity.class, mDataset[position]);
+                IntentSwitch.switchIntentWithData(mContext, ProductActivity.class, mDataset[position]);
             }
         });
 
@@ -70,16 +71,13 @@ public class BolAdapter extends RecyclerView.Adapter<BolAdapter.bolViewHolder> {
 
         ImageView img = holder.textView.findViewById(R.id.rec_img_product);
 
-        Picasso.get().load(mDataset[position].getImageUrlSmall().toString()).into(img);
-//        holder.textView.addView(view);
-
+        Picasso.get().load(mDataset[position].getImageUrlSmall()).into(img);
 
 
     }
 
     @Override
     public int getItemCount() {
-//        Toast.makeText(context, mDataset.length + " results found!", Toast.LENGTH_SHORT).show();
         return mDataset.length;
     }
 }

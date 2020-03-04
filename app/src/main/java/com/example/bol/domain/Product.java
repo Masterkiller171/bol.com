@@ -8,29 +8,29 @@ import java.io.Serializable;
 import java.net.URL;
 
 public class Product implements Parcelable {
-    private long id;
-    private String title;
-    private int rating;
-    private String shortDescription;
-    private String summary;
-    private String imageUrlSmall;
-    private String imageUrlBig;
+    private long mId;
+    private String mTitle;
+    private int mRating;
+    private String mShortDescription;
+    private String mSummary;
+    private String mImageUrlSmall;
+    private String mImageUrlBig;
 
-    private double normalPrice;
+    private double mNormalPrice;
 
 
     public Product() {
     }
 
     protected Product(Parcel in) {
-        id = in.readLong();
-        title = in.readString();
-        rating = in.readInt();
-        shortDescription = in.readString();
-        summary = in.readString();
-        imageUrlSmall = in.readString();
-        imageUrlBig = in.readString();
-        normalPrice = in.readDouble();
+        mId = in.readLong();
+        mTitle = in.readString();
+        mRating = in.readInt();
+        mShortDescription = in.readString();
+        mSummary = in.readString();
+        mImageUrlSmall = in.readString();
+        mImageUrlBig = in.readString();
+        mNormalPrice = in.readDouble();
     }
 
     //-------------------CREATOR--------------------
@@ -54,79 +54,79 @@ public class Product implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeLong(id);
-        parcel.writeString(title);
-        parcel.writeInt(rating);
-        parcel.writeString(shortDescription);
-        parcel.writeString(summary);
-        parcel.writeString(imageUrlSmall);
-        parcel.writeString(imageUrlBig);
-        parcel.writeDouble(normalPrice);
+        parcel.writeLong(mId);
+        parcel.writeString(mTitle);
+        parcel.writeInt(mRating);
+        parcel.writeString(mShortDescription);
+        parcel.writeString(mSummary);
+        parcel.writeString(mImageUrlSmall);
+        parcel.writeString(mImageUrlBig);
+        parcel.writeDouble(mNormalPrice);
     }
 
     //-------------------SETTERS--------------------
     public void setId(long id) {
-        this.id = id;
+        this.mId = id;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.mTitle = title;
     }
 
     public void setRating(int rating) {
-        this.rating = rating;
+        this.mRating = rating;
     }
 
     public void setShortDescription(String shortDescription) {
-        this.shortDescription = shortDescription;
+        this.mShortDescription = shortDescription;
     }
 
     public void setSummary(String summary) {
-        this.summary = summary;
+        this.mSummary = summary;
     }
 
     public void setImageUrlSmall(String imageUrl) {
-        this.imageUrlSmall = imageUrl;
+        this.mImageUrlSmall = imageUrl;
     }
 
     public void setImageUrlBig(String imageUrlBig) {
-        this.imageUrlBig = imageUrlBig;
+        this.mImageUrlBig = imageUrlBig;
     }
 
     public void setNormalPrice(double normalPrice) {
-        this.normalPrice = normalPrice;
+        this.mNormalPrice = normalPrice;
     }
 
     //-------------------GETTERS--------------------
     public long getId() {
-        return id;
+        return mId;
     }
 
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
     public int getRating() {
-        return rating;
+        return mRating;
     }
 
     public String getShortDescription() {
-        return shortDescription;
+        return mShortDescription;
     }
 
     public String getImageUrlSmall() {
-        return imageUrlSmall;
+        return mImageUrlSmall;
     }
 
     public String getImageUrlBig() {
-        return imageUrlBig;
+        return mImageUrlBig;
     }
 
     public String getSummary() {
-        return summary;
+        return mSummary;
     }
 
     public double getCurrentPrice() {
-        return normalPrice;
+        return mNormalPrice;
     }
 }

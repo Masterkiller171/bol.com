@@ -19,8 +19,8 @@ import java.util.Locale;
 
 public class NetworkManager {
     private Activity mActivity;
-    private NetworkUtils networkUtils;
-    private Product[] products;
+    private NetworkUtils mNetworkUtils;
+    private Product[] mProducts;
 
     private final static String LANGUAGE_CODE = "lang";
 
@@ -32,35 +32,38 @@ public class NetworkManager {
         if (isInputEmpty(mProductName)){
             Toast.makeText(mActivity, "No inuput!", Toast.LENGTH_SHORT).show();
         }else{
-            this.networkUtils = new NetworkUtils(mProductName, this.mActivity);
-            this.products = this.networkUtils.getProducts();
+            this.mNetworkUtils = new NetworkUtils(mProductName, this.mActivity);
+            this.mProducts = this.mNetworkUtils.getProducts();
             insertAdapterData(processSortingProducts(sortingButtonId));
         }
     }
 
     public Product[] getProducts() {
-        return products;
+        return mProducts;
     }
 
     private Product[] processSortingProducts(int sortingButtonId){
         ProductSort sorter;
         switch (sortingButtonId){
             case R.id.filter_but_hightolow:{
-                sorter = new HighToLowSort();
-                sorter.setProducts(this.products);
+                sorter = new HighToLowSort(mActivity);
+                sorter.setProducts(this.mProducts);
                 return sorter.getSortedProducts();
             }
             case R.id.filter_but_lowtohigh:{
-                sorter = new LowToHighSort();
-                sorter.setProducts(this.products);
+                sorter = new LowToHighSort(mActivity);
+                sorter.setProducts(this.mProducts);
                 return sorter.getSortedProducts();
             }
+            case R.id.filter_seek_pricefilter:{
+                Toast.makeText(mActivity, "In development ;p", Toast.LENGTH_SHORT).show();
+            }
         }
-        return products;
+        return mProducts;
     }
 
     public void insertAdapterData(Product[] data){
-        this.products = data;
+        this.mProducts = data;
         RecyclerView recyclerView = mActivity.findViewById(R.id.main_rec_results);
         recyclerView.setHasFixedSize(true);
 
