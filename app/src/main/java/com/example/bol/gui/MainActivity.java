@@ -1,8 +1,11 @@
 package com.example.bol.gui;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.Application;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.DisplayMetrics;
@@ -25,7 +28,7 @@ import com.example.bol.logic.NetworkManager;
 
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, Application.ActivityLifecycleCallbacks {
     private ListPopupWindow mListPopupWindow;
     private int mSortingButtonId;
     private NetworkManager mManager;
@@ -119,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         filterLayout.findViewById(R.id.filter_but_hightolow).setOnClickListener(this);
         filterLayout.findViewById(R.id.filter_but_lowtohigh).setOnClickListener(this);
 
-        final TextView mSlider = findViewById(R.id.filter_txt_maxprice);
         SeekBar bar = filterLayout.findViewById(R.id.filter_seek_pricefilter);
         bar.setMax(999);
         bar.setProgress(mMaxPrice);
@@ -171,5 +173,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void onFilter(){
         mListPopupWindow.show();
+    }
+
+    @Override
+    public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onActivityStarted(@NonNull Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityResumed(@NonNull Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityPaused(@NonNull Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityStopped(@NonNull Activity activity) {
+
+    }
+
+    @Override
+    public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle bundle) {
+
+    }
+
+    @Override
+    public void onActivityDestroyed(@NonNull Activity activity) {
+
     }
 }
